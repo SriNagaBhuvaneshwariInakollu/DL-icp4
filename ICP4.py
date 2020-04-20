@@ -13,17 +13,17 @@ def process_eval(imk):
     output1 /= 255.0
     print(type(output1))
     output1 = np.array(output1).reshape(-1, 50, 50, 3)
-    classifer = joblib.load("Nikhitha.pk2")
+    classifer = joblib.load("b.pk2")
     x = classifer.predict_classes(output1[[0], :])
     if x[0] == 1:
-        result = "PREDICTED RESULT IS FLIGHT"
+        result = "PREDICTED RESULT IS BICYCLE"
     else:
-        result = "PREDICTED RESULT IS CAR"
+        result = "PREDICTED RESULT IS SHIP"
     return result
 
 @app.route('/', methods=['GET'])
 def index():
-   return render_template('fileUpload.html')
+   return render_template('index.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def handle_form():
@@ -32,7 +32,7 @@ def handle_form():
         file.save(secure_filename("save.jpeg"))
         im=cv2.imread("save.jpeg")
         result=process_eval(im)
-        return render_template('fileUpload.html',result=result)
+        return render_template('index.html',result=result)
 
 if __name__ == "__main__":
     app.run()
